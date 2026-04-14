@@ -33,7 +33,8 @@ defmodule Parser do
           type: if(amount >= 0, do: :credit, else: :debit)
         }
 
-        nil -> nil
+      nil ->
+        nil
     end
   end
 

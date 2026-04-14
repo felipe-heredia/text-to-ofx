@@ -6,7 +6,10 @@ defmodule OfxBuilder do
 
   # EEx.function_from_string compiles this template directly into a fast
   # function called render_ofx/1
-  EEx.function_from_string(:def, :render_ofx, """
+  EEx.function_from_string(
+    :def,
+    :render_ofx,
+    """
     OFXHEADER:100
     DATA:OFXSGML
     VERSION:102
@@ -49,7 +52,9 @@ defmodule OfxBuilder do
         </STMTTRNRS>
       </BANKMSGRSV1>
     </OFX>
-    """, [:transactions])
+    """,
+    [:transactions]
+  )
 
   @spec build([Transaction.t()]) :: String.t()
   def build(transactions) do
