@@ -7,10 +7,8 @@ defmodule TextToOfx do
   Hello world.
 
   ## Examples
-
-      iex> TextToOfx.hello()
-      :world
-
+  iex> TextToOfx.hello()
+  :world
   """
   def hello do
     :world

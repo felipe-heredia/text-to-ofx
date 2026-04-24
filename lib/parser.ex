@@ -50,9 +50,10 @@ defmodule Parser do
   # Converts "DD/MM/YYYY" to "YYYYMMDD"
   defp format_date_for_ofx(date_str) do
     case String.split(date_str, "/") do
-      [day, month, year] -> "#{year}#{month}#{day}"
-      
-      [day, month] -> 
+      [day, month, year] ->
+        "#{year}#{month}#{day}"
+
+      [day, month] ->
         current_year = Date.utc_today().year |> Integer.to_string()
         "#{current_year}#{month}#{day}"
     end
