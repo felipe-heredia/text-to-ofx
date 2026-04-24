@@ -22,7 +22,7 @@ defmodule Parser do
   # 2. Description (anything in the middle)
   # 3. Value (Format: -1.000,50 or 150,00)
   defp parse_line(line) do
-    case Regex.run(~r/^(\d{2}\/\d{2}\/\d{4})\s+(.+?)\s+(-?[\d\.]+,\d{2})/, String.trim(line)) do
+    case Regex.run(~r/^(\d{2}\/\d{2}(?:\/\d{4})?)\s+(.+?)\s+(-?[\d\.]+,\d{2})/, String.trim(line)) do
       [_, date_str, desc, amount_str] ->
         amount = parse_amount(amount_str)
 
@@ -49,7 +49,12 @@ defmodule Parser do
 
   # Converts "DD/MM/YYYY" to "YYYYMMDD"
   defp format_date_for_ofx(date_str) do
-    [day, month, year] = String.split(date_str, "/")
-    "#{year}#{month}#{day}"
+    case String.split(date_str, "/") do
+      [day, month, year] -> "#{year}#{month}#{day}"
+      
+      [day, month] -> 
+        current_year = Date.utc_today().year |> Integer.to_string()
+        "#{current_year}#{month}#{day}"
+    end
   end
 end
