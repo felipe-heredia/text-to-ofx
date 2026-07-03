@@ -4,13 +4,28 @@ defmodule CLI do
   """
 
   def main(args) do
-    case args do
-      [input_file, output_file] ->
-        process(input_file, output_file)
+    {opts, _rest, invalid} =
+      OptionParser.parse(args, strict: [input_file: :string, output_file: :string])
 
-      _ ->
-        IO.puts("Usage: ./text_to_ofx <input_file.txt> <output_file.txt>")
+    if invalid != [] do
+      IO.puts("Invalid options: #{inspect(invalid)}")
+      System.halt(1)
     end
+
+    missing =
+      [:input_file, :output_file]
+      |> Enum.reject(fn key -> Keyword.has_key?(opts, key) end)
+
+    if missing != [] do
+      IO.puts("Missing required options: #{Enum.join(missing, ", ")}")
+      System.halt(1)
+    end
+
+    input_file = Keyword.get(opts, :input_file)
+    output_file = Keyword.get(opts, :output_file)
+    IO.inspect({input_file, output_file})
+
+    process(input_file, output_file)
   end
 
   defp process(input_file, output_file) do
