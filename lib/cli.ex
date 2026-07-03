@@ -1,4 +1,4 @@
-defmodule CLI do
+defmodule TextToOfx.CLI do
   @moduledoc """
   Command line interface entrypoint.
   """

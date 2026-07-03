@@ -7,7 +7,7 @@ defmodule TextToOfx.MixProject do
       version: "0.0.1",
       elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
-      escript: [main_module: CLI],
+      escript: [main_module: TextToOfx.CLI],
       deps: deps()
     ]
   end
