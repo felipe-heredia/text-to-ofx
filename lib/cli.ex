@@ -32,20 +32,21 @@ defmodule CLI do
     IO.puts("Reading #{input_file}...")
 
     with {:ok, type} <- to_type(type || "asset"),
-    {:ok, content} <- File.read(input_file) do
+         {:ok, content} <- File.read(input_file) do
       content
       |> Parser.parse()
       |> Transformer.transform(type)
       |> OfxBuilder.build()
       |> then(&File.write!(output_file, &1))
 
-    IO.puts("Successfully created #{output_file}!")
-    else {:error, {:unknown_type, val}} ->
-      IO.puts("Error: unknown type #{inspect(val)}. Use: asset | liability")
-      System.halt(1)
+      IO.puts("Successfully created #{output_file}!")
+    else
+      {:error, {:unknown_type, val}} ->
+        IO.puts("Error: unknown type #{inspect(val)}. Use: asset | liability")
+        System.halt(1)
 
-      {:error, :enoent} ->
-        IO.puts("Error: file not found: #{input_file}")
+      {:error, reason} ->
+        IO.puts("Error reading: #{input_file}: #{inspect(reason)}")
         System.halt(1)
     end
   end

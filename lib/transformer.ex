@@ -1,6 +1,11 @@
 defmodule Transformer do
+  @moduledoc """
+  Transforms transactions based on the account type
+  """
+
   alias Transaction
 
+  @spec transform([Transaction.t()], :asset | :liability) :: [Transaction.t()]
   def transform(transactions, :asset), do: transactions
 
   def transform(transactions, :liability) do

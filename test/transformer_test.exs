@@ -1,7 +1,7 @@
-defmodule TransformTest do
+defmodule TransformerTest do
   use ExUnit.Case, async: true
 
-  test "asset leaves amounts unchanged when" do
+  test "asset leaves amounts unchanged" do
     tx = %Transaction{date: "20260101", description: "Salary", amount: 100.0, type: :credit}
     assert Transformer.transform([tx], :asset) == [tx]
   end
