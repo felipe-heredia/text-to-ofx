@@ -46,7 +46,7 @@ defmodule TextToOfx.CLI do
         System.halt(1)
 
       {:error, reason} ->
-        IO.puts("Error reading: #{input_file}: #{inspect(reason)}")
+        IO.puts("Error reading file #{input_file}: #{inspect(reason)}")
         System.halt(1)
     end
   end
